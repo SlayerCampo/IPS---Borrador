@@ -90,6 +90,23 @@ h1, h2, h3, h4, h5, .giant-letter {
     padding: 20px;
 }
 
+/* 1. Fondo Blanco Transparente que inicia desde ARRIBA del todo */
+.white-glow-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.7) 30%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 80%);
+    clip-path: ellipse(150% 100% at 50% 0%);
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* Identidad Dinámica (L S) - Versión mejorada */
 .brand-dynamic {
     display: flex;
@@ -105,9 +122,33 @@ h1, h2, h3, h4, h5, .giant-letter {
     margin-bottom: 10px;
 }
 
-.main-logo-img {
-    width: 180px;
+/* Contenedor para las dos imágenes */
+.brand-composite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Control de la imagen del Título */
+.main-title-img {
+    width: auto;
+    max-width: 600px;
     height: auto;
+    object-fit: contain;
+}
+
+/* Control de la imagen del Logo (A la derecha) */
+.main-logo-img {
+    width: auto;
+    max-width: 200px;
+    height: auto;
+    object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
 }
 
@@ -137,24 +178,28 @@ h1, h2, h3, h4, h5, .giant-letter {
     color: var(--bg-white);
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     line-height: 0.9;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .sub-text {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--bg-white);
+    color: white;
     margin-left: -5px;
-    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .company-legal {
     margin-top: 10px;
+    position: relative;
+    z-index: 10;
 }
 
 .company-legal h2 {
     font-size: 1.8rem;
     letter-spacing: 3px;
-    color: var(--accent-cyan);
+    color: var(--primary-dark);
     margin-top: 10px;
     font-weight: 600;
 }
@@ -310,6 +355,7 @@ h1, h2, h3, h4, h5, .giant-letter {
     margin: 0;
     line-height: 1.2;
     white-space: nowrap;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .nav-nit {
@@ -376,7 +422,7 @@ h1, h2, h3, h4, h5, .giant-letter {
 }
 
 /* =========================================
-   4. LÍNEAS DE FLUJO
+   4. LÍNEAS DE FLUJO SUAVIZADAS
    ========================================= */
 .flow-line-container {
     position: absolute;
@@ -394,25 +440,104 @@ h1, h2, h3, h4, h5, .giant-letter {
     height: 100%;
 }
 
+.flow-line path {
+    stroke: rgba(0, 174, 239, 0.12);
+    stroke-width: 0.8;
+    stroke-linecap: round;
+    stroke-dasharray: 5, 5;
+    animation: flowMove 20s linear infinite;
+}
+
 .flow-line-secondary {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.6;
+}
+
+.flow-line-secondary path {
+    stroke: rgba(0, 86, 143, 0.06);
+    stroke-width: 0.5;
+    stroke-linecap: round;
+    stroke-dasharray: 8, 8;
+    animation: flowMove 25s linear infinite reverse;
+}
+
+@keyframes flowMove {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 100; }
 }
 
 /* =========================================
-   5. SECCIONES DE CONTENIDO
+   5. SECCIONES DE CONTENIDO CON TRANSICIONES ORGÁNICAS
    ========================================= */
 .content-section {
-    padding: 100px 0;
+    padding: 120px 0;
     position: relative;
     z-index: 5;
     width: 100%;
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Bordes curvados orgánicos para todas las secciones */
+.content-section::before,
+.content-section::after {
+    content: '';
+    position: absolute;
+    width: 110%;
+    left: -5%;
+    height: 80px;
+    background: inherit;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.content-section::before {
+    top: -60px;
+    border-radius: 45% 55% 35% 65% / 100% 100% 0% 0%;
+    transform: rotate(0.4deg);
+}
+
+.content-section::after {
+    bottom: -60px;
+    border-radius: 55% 45% 65% 35% / 0% 0% 100% 100%;
+    transform: rotate(-0.4deg);
+}
+
+/* Asegurar que el contenido esté sobre las ondas */
+.content-section > .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* Degradados suaves entre secciones */
+.section-gradient-overlay {
+    position: absolute;
+    width: 100%;
+    height: 150px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.section-gradient-top {
+    top: 0;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%);
+}
+
+.section-gradient-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, 
+        rgba(255, 255, 255, 0.8) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%);
+}
+
+/* Fondos específicos */
 .bg-light {
     background-color: var(--bg-light);
 }
@@ -424,6 +549,38 @@ h1, h2, h3, h4, h5, .giant-letter {
 
 .bg-contact {
     background-color: var(--bg-contact);
+}
+
+/* Ajustes para fondos específicos */
+.bg-dark::before,
+.bg-dark::after {
+    background: var(--bg-dark);
+}
+
+.bg-light::before,
+.bg-light::after {
+    background: var(--bg-light);
+}
+
+.bg-contact::before,
+.bg-contact::after {
+    background: var(--bg-contact);
+}
+
+.bg-dark .section-gradient-top,
+.bg-dark .section-gradient-bottom {
+    background: linear-gradient(to bottom, 
+        rgba(0, 26, 51, 0.8) 0%,
+        rgba(0, 26, 51, 0.4) 50%,
+        transparent 100%);
+}
+
+.bg-light .section-gradient-top,
+.bg-light .section-gradient-bottom {
+    background: linear-gradient(to bottom, 
+        rgba(248, 251, 255, 0.8) 0%,
+        rgba(248, 251, 255, 0.4) 50%,
+        transparent 100%);
 }
 
 .section-title {
@@ -608,9 +765,35 @@ h1, h2, h3, h4, h5, .giant-letter {
 
 /* Cita destacada */
 .highlight-quote {
-    padding: 80px 0;
+    padding: 100px 0;
     background: linear-gradient(135deg, var(--bg-light), white);
     width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.highlight-quote::before,
+.highlight-quote::after {
+    content: '';
+    position: absolute;
+    width: 110%;
+    left: -5%;
+    height: 80px;
+    background: inherit;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.highlight-quote::before {
+    top: -60px;
+    border-radius: 40% 60% 25% 75% / 100% 100% 0% 0%;
+    transform: rotate(0.3deg);
+}
+
+.highlight-quote::after {
+    bottom: -60px;
+    border-radius: 60% 40% 75% 25% / 0% 0% 100% 100%;
+    transform: rotate(-0.3deg);
 }
 
 .quote-flex {
@@ -1046,6 +1229,20 @@ h1, h2, h3, h4, h5, .giant-letter {
     color: white;
     padding-top: 80px;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+#footer::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -5%;
+    width: 110%;
+    height: 80px;
+    background: var(--bg-dark);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    transform: rotate(0.2deg);
 }
 
 .footer-grid {
@@ -1078,6 +1275,7 @@ h1, h2, h3, h4, h5, .giant-letter {
     font-size: 1.4rem;
     color: white;
     margin: 0;
+    font-family: 'Montserrat Alternates', sans-serif;
 }
 
 .footer-logo p {
@@ -1219,7 +1417,23 @@ h1, h2, h3, h4, h5, .giant-letter {
 }
 
 /* =========================================
-   7. RESPONSIVIDAD (PRIORIDAD MÓVIL)
+   7. NAVEGACIÓN ACTIVA
+   ========================================= */
+.nav-links a.active {
+    color: var(--accent-cyan) !important;
+    font-weight: 700;
+}
+
+.nav-links a.active::after {
+    width: 100% !important;
+}
+
+.menu-toggle.active i {
+    color: var(--accent-cyan);
+}
+
+/* =========================================
+   8. RESPONSIVIDAD (PRIORIDAD MÓVIL)
    ========================================= */
 @media (max-width: 992px) {
     .card-grid,
@@ -1266,7 +1480,7 @@ h1, h2, h3, h4, h5, .giant-letter {
     }
     
     .content-section {
-        padding: 70px 0;
+        padding: 80px 0;
         width: 100%;
     }
     
@@ -1280,6 +1494,21 @@ h1, h2, h3, h4, h5, .giant-letter {
         flex-direction: column;
         gap: 10px;
         width: 100%;
+    }
+    
+    .brand-composite {
+        gap: 15px;
+        padding: 0 15px;
+    }
+
+    .main-title-img {
+        width: 70%;
+        max-width: 300px;
+    }
+
+    .main-logo-img {
+        width: 25%;
+        max-width: 100px;
     }
     
     .big-letters {
@@ -1398,7 +1627,11 @@ h1, h2, h3, h4, h5, .giant-letter {
     }
     
     .main-logo-img {
-        width: 140px;
+        max-width: 80px;
+    }
+    
+    .main-title-img {
+        max-width: 200px;
     }
     
     .slogan-box {
@@ -1423,7 +1656,7 @@ h1, h2, h3, h4, h5, .giant-letter {
     }
     
     .content-section {
-        padding: 50px 0;
+        padding: 60px 0;
     }
     
     .footer-grid {
@@ -1431,25 +1664,3 @@ h1, h2, h3, h4, h5, .giant-letter {
         gap: 30px;
     }
 }
-
-/* =========================================
-   8. FIX PARA NAVEGACIÓN ACTIVA
-   ========================================= */
-.nav-links a.active {
-    color: var(--accent-cyan) !important;
-    font-weight: 700;
-}
-
-.nav-links a.active::after {
-    width: 100% !important;
-}
-
-.menu-toggle.active i {
-    color: var(--accent-cyan);
-}
-
-/* =========================================
-   9. ELIMINÉ LA TRANSFORMACIÓN DEL LOGO
-   ========================================= */
-/* Removí todas las reglas .brand-dynamic.stuck que movían el logo */
-/* El logo ahora se queda siempre en su lugar */
