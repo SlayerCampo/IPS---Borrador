@@ -41,6 +41,7 @@ html {
 }
 
 body {
+    
     font-family: 'Montserrat', sans-serif;
     color: var(--text-main);
     line-height: 1.6;
@@ -48,6 +49,7 @@ body {
     background-color: var(--bg-white);
     width: 100%;
 }
+
 
 h1, h2, h3, h4, h5, .giant-letter {
     font-family: 'Poppins', sans-serif;
@@ -1663,4 +1665,18 @@ h1, h2, h3, h4, h5, .giant-letter {
         grid-template-columns: 1fr;
         gap: 30px;
     }
+}
+
+
+/* Justificación global para todos los textos descriptivos */
+p, .sub-text, .mission-vision-card p, .info-card p, li, .about-text {
+    text-align: justify;
+    text-justify: inter-word; /* Mejora el espaciado entre palabras en navegadores modernos */
+    hyphens: auto; /* Opcional: añade guiones si una palabra es muy larga para evitar huecos blancos */
+}
+
+.sub-text {
+    text-align: center !important; /* El slogan luce mejor centrado bajo el logo */
+    max-width: 800px;
+    margin: 0 auto;
 }
